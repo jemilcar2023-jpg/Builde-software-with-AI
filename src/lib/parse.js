@@ -1,6 +1,6 @@
 // Connects the app to our Back4App (Parse) backend.
 // Keys come from .env locally and from Netlify environment variables in production.
-import Parse from 'parse/dist/parse.min.js'
+import Parse from 'parse'
 
 const appId = import.meta.env.VITE_PARSE_APP_ID
 const jsKey = import.meta.env.VITE_PARSE_JS_KEY

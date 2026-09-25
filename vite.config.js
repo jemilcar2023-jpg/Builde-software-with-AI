@@ -4,4 +4,8 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    // The Parse SDK alone is ~1 MB minified, so raise the default warning limit.
+    chunkSizeWarningLimit: 1500,
+  },
 })
