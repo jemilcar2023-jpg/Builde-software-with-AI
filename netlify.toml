@@ -1,0 +1,8 @@
+# Netlify build settings. The Back4App keys are set in
+# Netlify → Site configuration → Environment variables (not committed).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
