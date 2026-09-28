@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { CATEGORIES } from '../constants'
+import PhotoPicker from './PhotoPicker'
 
 const EMPTY = {
   title: '',
@@ -18,6 +19,8 @@ export default function RecipeForm({ initial, onSave, onCancel }) {
     ...start,
     // Ingredients are stored as an array but edited one per line.
     ingredientsText: start.ingredients.join('\n'),
+    photoFile: null, // a newly chosen photo, uploaded on save
+    removePhoto: false, // true when the user removes the saved photo
   })
   const [error, setError] = useState('')
   const [saving, setSaving] = useState(false)
@@ -115,6 +118,15 @@ export default function RecipeForm({ initial, onSave, onCancel }) {
             placeholder={'1. Preheat the oven to 350°F.\n2. Mash the bananas…'}
           />
         </label>
+
+        <PhotoPicker
+          existingUrl={initial?.photoUrl}
+          file={form.photoFile}
+          removed={form.removePhoto}
+          onSelect={(file) => setForm((f) => ({ ...f, photoFile: file, removePhoto: false }))}
+          onRemove={() => setForm((f) => ({ ...f, photoFile: null, removePhoto: true }))}
+          onError={setError}
+        />
 
         <label className="checkbox">
           <input
