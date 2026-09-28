@@ -496,3 +496,37 @@ textarea:focus {
 .photo-actions:empty {
   display: none;
 }
+
+/* ---------- Recipe photos ---------- */
+
+.card-photo {
+  display: block;
+  width: calc(100% + 36px);
+  height: 160px;
+  margin: -18px -18px 4px;
+  object-fit: cover;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--accent-soft);
+}
+
+.card-photo.placeholder {
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+}
+
+.detail-photo {
+  display: block;
+  width: calc(100% + 56px);
+  max-height: 360px;
+  margin: -28px -28px 24px;
+  object-fit: cover;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+@media (max-width: 600px) {
+  .detail-photo {
+    width: calc(100% + 32px);
+    margin: -20px -16px 20px;
+  }
+}

@@ -2,6 +2,9 @@
 export default function RecipeDetail({ recipe, onEdit, onDelete, onToggleFavorite }) {
   return (
     <div className="panel detail">
+      {recipe.photoUrl && (
+        <img src={recipe.photoUrl} alt={recipe.title} className="detail-photo" />
+      )}
       <div className="detail-head">
         <div>
           <h2>{recipe.title}</h2>

@@ -1,3 +1,5 @@
+import { CATEGORY_EMOJI } from '../constants'
+
 // A single recipe tile in the grid.
 export default function RecipeCard({ recipe, onOpen, onToggleFavorite }) {
   function handleStar(e) {
@@ -13,6 +15,13 @@ export default function RecipeCard({ recipe, onOpen, onToggleFavorite }) {
       onClick={() => onOpen(recipe)}
       onKeyDown={(e) => e.key === 'Enter' && onOpen(recipe)}
     >
+      {recipe.photoUrl ? (
+        <img src={recipe.photoUrl} alt="" className="card-photo" loading="lazy" />
+      ) : (
+        <div className="card-photo placeholder" aria-hidden="true">
+          {CATEGORY_EMOJI[recipe.category] || '🍽️'}
+        </div>
+      )}
       <div className="card-top">
         <h3>{recipe.title}</h3>
         <button
