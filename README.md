@@ -7,7 +7,7 @@ Built for the Hootcamp "Build Software with AI" assignment, using AI tools to wr
 ## Links
 
 - **Live app:** https://starlit-pasca-1b235c.netlify.app
-- **Demo video (YouTube, unlisted):** _coming soon_
+- **Demo video (YouTube, unlisted):** https://youtu.be/-WJNKnwjdHY
 
 ## What the app does
 
