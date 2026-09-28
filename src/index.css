@@ -530,3 +530,45 @@ textarea:focus {
     margin: -20px -16px 20px;
   }
 }
+
+/* ---------- Password reset ---------- */
+
+.link-btn {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  align-self: center;
+}
+
+.link-btn:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+.link-btn.forgot {
+  align-self: flex-end;
+  margin-top: -6px;
+}
+
+.form-title {
+  font-size: 1.15rem;
+}
+
+.small {
+  font-size: 0.9rem;
+  margin: -6px 0 0;
+}
+
+.success {
+  color: #166534;
+  background: #ecfdf3;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 0;
+  font-size: 0.9rem;
+}

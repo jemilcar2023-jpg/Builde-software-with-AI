@@ -1,4 +1,4 @@
-// User registration, login and logout using Back4App's built-in _User class.
+// User registration, login, logout and password reset using Back4App's built-in _User class.
 import Parse from '../lib/parse'
 
 export function getCurrentUser() {
@@ -19,4 +19,9 @@ export async function login(username, password) {
 
 export async function logout() {
   return Parse.User.logOut()
+}
+
+// Back4App emails the user a link to choose a new password.
+export async function requestPasswordReset(email) {
+  return Parse.User.requestPasswordReset(email)
 }

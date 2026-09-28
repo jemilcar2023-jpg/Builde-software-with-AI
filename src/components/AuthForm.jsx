@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { login, register } from '../services/auth'
+import ResetPasswordForm from './ResetPasswordForm'
 
-// One form that switches between "Log in" and "Create account".
+// One form that switches between "Log in" and "Create account",
+// plus a "Forgot password?" screen.
 export default function AuthForm({ onAuthenticated }) {
   const [mode, setMode] = useState('login')
   const [username, setUsername] = useState('')
@@ -45,68 +47,84 @@ export default function AuthForm({ onAuthenticated }) {
         <h1 className="brand">🍲 Recipe Box</h1>
         <p className="muted">Save, organize and find your favorite recipes.</p>
 
-        <div className="tabs" role="tablist">
-          <button
-            type="button"
-            role="tab"
-            aria-selected={!isRegister}
-            className={!isRegister ? 'tab active' : 'tab'}
-            onClick={() => switchMode('login')}
-          >
-            Log in
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={isRegister}
-            className={isRegister ? 'tab active' : 'tab'}
-            onClick={() => switchMode('register')}
-          >
-            Create account
-          </button>
-        </div>
+        {mode === 'reset' ? (
+          <ResetPasswordForm onBack={() => switchMode('login')} />
+        ) : (
+          <>
+            <div className="tabs" role="tablist">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={!isRegister}
+                className={!isRegister ? 'tab active' : 'tab'}
+                onClick={() => switchMode('login')}
+              >
+                Log in
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={isRegister}
+                className={isRegister ? 'tab active' : 'tab'}
+                onClick={() => switchMode('register')}
+              >
+                Create account
+              </button>
+            </div>
 
-        <form onSubmit={handleSubmit} className="form">
-          <label>
-            Username
-            <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              autoComplete="username"
-              required
-            />
-          </label>
+            <form onSubmit={handleSubmit} className="form">
+              <label>
+                Username
+                <input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="username"
+                  required
+                />
+              </label>
 
-          {isRegister && (
-            <label>
-              Email
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="email"
-                required
-              />
-            </label>
-          )}
+              {isRegister && (
+                <label>
+                  Email
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
+                    required
+                  />
+                </label>
+              )}
 
-          <label>
-            Password
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete={isRegister ? 'new-password' : 'current-password'}
-              required
-            />
-          </label>
+              <label>
+                Password
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete={isRegister ? 'new-password' : 'current-password'}
+                  required
+                />
+              </label>
 
-          {error && <p className="error">{error}</p>}
+              {!isRegister && (
+                <button
+                  type="button"
+                  className="link-btn forgot"
+                  onClick={() => switchMode('reset')}
+                >
+                  Forgot password?
+                </button>
+              )}
 
-          <button type="submit" className="btn primary" disabled={loading}>
-            {loading ? 'Please wait…' : isRegister ? 'Create account' : 'Log in'}
-          </button>
-        </form>
+              {error && <p className="error">{error}</p>}
+
+              <button type="submit" className="btn primary" disabled={loading}>
+                {loading ? 'Please wait…' : isRegister ? 'Create account' : 'Log in'}
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </div>
   )
