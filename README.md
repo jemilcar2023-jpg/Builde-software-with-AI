@@ -12,11 +12,13 @@ Built for the Hootcamp "Build Software with AI" assignment, using AI tools to wr
 ## What the app does
 
 - **User accounts:** register, log in and log out. You stay logged in between visits until you log out.
+- **Password reset:** "Forgot password?" on the login screen emails you a link to choose a new password
 - **Recipes (full CRUD):**
-  - **Create:** add a recipe with a title, category, prep time, servings, ingredients and instructions
+  - **Create:** add a recipe with a title, category, prep time, servings, ingredients, instructions and an optional photo
   - **Read:** browse your recipes as cards and open one to see the full recipe
-  - **Update:** edit any recipe
+  - **Update:** edit any recipe, including changing or removing its photo
   - **Delete:** remove a recipe (after a confirmation)
+- **Recipe photos:** upload a JPG, PNG, WebP or GIF (up to 5 MB) with a live preview. Photos show on the recipe cards and detail page, and recipes without one show a category emoji
 - **Favorites:** star recipes and filter to show only favorites
 - **Search and filter:** search by title or ingredient, and filter by category
 - **Privacy:** recipes are protected with per-user permissions (ACLs) in the database, so other users can't read or edit them
@@ -28,7 +30,8 @@ Built for the Hootcamp "Build Software with AI" assignment, using AI tools to wr
 | --- | --- |
 | Frontend | [React 19](https://react.dev) + [Vite](https://vite.dev) |
 | Backend / database | [Back4App](https://www.back4app.com) (hosted Parse Server) |
-| Authentication | Back4App / Parse built-in users (`_User` class) |
+| Authentication | Back4App / Parse built-in users (`_User` class), including password reset emails |
+| File storage | Back4App file storage (recipe photos) |
 | Backend SDK | [Parse JavaScript SDK](https://docs.parseplatform.org/js/guide/) |
 | Hosting | [Netlify](https://www.netlify.com) |
 | CI | GitHub Actions (lint and build on every push) |
@@ -51,6 +54,7 @@ Back4App stores two classes (tables):
 | `ingredients` | Array | One string per ingredient |
 | `instructions` | String | Step-by-step directions |
 | `favorite` | Boolean | Starred by the user |
+| `photo` | File | Optional recipe photo, stored in Back4App file storage |
 | `owner` | Pointer → `_User` | Who created the recipe |
 | `ACL` | ACL | Read/write allowed for the owner only |
 
@@ -68,19 +72,21 @@ build_Ai/
     ├── main.jsx                # React entry point
     ├── App.jsx                 # Shows the login screen or the app, based on the user
     ├── index.css               # All styles
-    ├── constants.js            # Recipe categories
+    ├── constants.js            # Recipe categories and their placeholder emoji
     ├── lib/
     │   └── parse.js            # Connects to Back4App with the keys from .env
     ├── services/               # All backend calls live here
-    │   ├── auth.js             # register, login, logout, getCurrentUser
-    │   └── recipes.js          # listRecipes, createRecipe, updateRecipe, deleteRecipe, setFavorite
+    │   ├── auth.js             # register, login, logout, getCurrentUser, requestPasswordReset
+    │   └── recipes.js          # listRecipes, createRecipe, updateRecipe, deleteRecipe, setFavorite, photo upload
     └── components/             # UI
         ├── AuthForm.jsx        # Log in / Create account form
+        ├── ResetPasswordForm.jsx # "Forgot password?" screen
         ├── Header.jsx          # Top bar with username and Log out
         ├── RecipesPage.jsx     # Main screen: list, search, filters, and which view is shown
-        ├── RecipeCard.jsx      # One recipe tile in the grid
-        ├── RecipeDetail.jsx    # Full recipe with Edit / Delete
-        └── RecipeForm.jsx      # Add / edit form with validation
+        ├── RecipeCard.jsx      # One recipe tile in the grid (photo or emoji)
+        ├── RecipeDetail.jsx    # Full recipe with photo, Edit / Delete
+        ├── RecipeForm.jsx      # Add / edit form with validation
+        └── PhotoPicker.jsx     # Choose, preview, change or remove a photo
 ```
 
 **Design decisions**
